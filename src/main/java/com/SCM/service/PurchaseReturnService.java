@@ -13,7 +13,7 @@ public interface PurchaseReturnService {
 
 	public List<PurchaseReturn> getAllPurchaseReturn();
 
-	public Optional<PurchaseReturn> getPurchaseReturnById(int id);
+	public PurchaseReturn getPurchaseReturnById(int id);
 
 	void deletePurchaseReturn(int id);
 

@@ -336,11 +336,11 @@ if (topByVoucherOrderByStartnumberwithprefilnoDesc != null && status.equals("sta
 	}
 
 	@Override
-	public Optional<PurchaseReturn> getPurchaseReturnById(int id) {
+	public PurchaseReturn getPurchaseReturnById(int id) {
 
 		Optional<PurchaseReturn> purchasereturn = purchaseReturnRepo.findById(id);
 	
-		return purchasereturn;
+		return purchasereturn.get();
 	}
 
 	@Override
