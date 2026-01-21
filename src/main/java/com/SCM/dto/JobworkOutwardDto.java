@@ -6,10 +6,13 @@ import com.SCM.model.Jobworkoutwarditems;
 import com.SCM.model.Supplier;
 import com.SCM.model.Transporters;
 import com.SCM.model.Warehouse;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class JobworkOutwardDto {
 
 	private int id;

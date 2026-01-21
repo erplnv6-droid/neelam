@@ -8,10 +8,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.SCM.IndexDto.SalesExpenseReportItemsDTO;
 import com.SCM.model.SalesExpenseImages;
 import com.SCM.model.SalesExpenseItems;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SalesExpenseDTO {
 
 	private int id;

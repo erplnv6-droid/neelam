@@ -5,8 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.SCM.model.DistributorAddress;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Component
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class DistributorAddressMapper {
 	
 	@Autowired

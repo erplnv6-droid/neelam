@@ -2,10 +2,12 @@ package com.SCM.dto;
 
 import com.SCM.model.DistributorMinimumStockItems;
 import com.SCM.model.Product;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DistributorMinimumStockDto {
 	private int id;
 

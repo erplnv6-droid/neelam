@@ -11,11 +11,14 @@ import org.springframework.stereotype.Component;
 import com.SCM.model.Distributor;
 import com.SCM.model.DistributorOpeningStockItems;
 import com.SCM.model.Product;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class DistributorOpeningStockDto {
 
 	private long id;

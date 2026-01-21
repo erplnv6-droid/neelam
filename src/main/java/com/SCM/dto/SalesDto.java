@@ -24,6 +24,7 @@ import com.SCM.model.SalesItems;
 import com.SCM.model.Transporters;
 import com.SCM.model.VoucherMaster;
 import com.SCM.model.Warehouse;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 import lombok.Getter;
@@ -33,6 +34,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 public class SalesDto {
 

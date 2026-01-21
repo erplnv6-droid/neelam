@@ -22,10 +22,12 @@ import com.SCM.model.States;
 import com.SCM.model.SupplierAddress;
 import com.SCM.model.SupplierSubContacts;
 import com.SCM.model.Zone;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SupplierDto {
 
 	private int id;

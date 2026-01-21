@@ -8,12 +8,14 @@ import com.SCM.model.CartItems;
 import com.SCM.model.Distributor;
 import com.SCM.model.Retailer;
 import com.SCM.model.Staff;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CartDto {
 	
 

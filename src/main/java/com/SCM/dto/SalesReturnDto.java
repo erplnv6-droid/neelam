@@ -25,10 +25,12 @@ import com.SCM.model.Retailer;
 import com.SCM.model.SalesReturnItems;
 import com.SCM.model.VoucherMaster;
 import com.SCM.model.Warehouse;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SalesReturnDto {
 
 	private int id;

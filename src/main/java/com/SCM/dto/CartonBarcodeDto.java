@@ -13,10 +13,12 @@ import com.SCM.model.CartonBarcodeItems;
 import com.SCM.model.GalaPrefix;
 import com.SCM.model.MasterCartoon;
 import com.SCM.model.Product;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CartonBarcodeDto {
 
 	

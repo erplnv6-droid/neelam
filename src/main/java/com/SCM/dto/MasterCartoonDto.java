@@ -4,10 +4,12 @@ import java.time.LocalDate;
 
 import com.SCM.model.Brand;
 import com.SCM.model.Product;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MasterCartoonDto {
 
 	private long id;

@@ -13,10 +13,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.SCM.model.Distributor;
 import com.SCM.model.Retailer;
 import com.SCM.model.Staff;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class MinutesOfMeetingDto {
 
 	private int id;

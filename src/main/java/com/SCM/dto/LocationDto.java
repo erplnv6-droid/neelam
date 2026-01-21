@@ -2,10 +2,12 @@ package com.SCM.dto;
 
 import com.SCM.model.Distributor;
 import com.SCM.model.Retailer;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LocationDto {
 
 	private int id;

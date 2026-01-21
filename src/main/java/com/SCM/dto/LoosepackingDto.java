@@ -2,12 +2,14 @@ package com.SCM.dto;
 
 import com.SCM.model.Brand;
 import com.SCM.model.Product;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LoosepackingDto {
 
 	private Long id;

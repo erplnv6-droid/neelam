@@ -3,6 +3,7 @@ package com.SCM.dto;
 import com.SCM.model.Distributor;
 import com.SCM.model.PrimaryOrderItems;
 import com.SCM.model.WorkOrderItem;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 
@@ -15,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PrimaryOrderDto {
 
 	private int id;

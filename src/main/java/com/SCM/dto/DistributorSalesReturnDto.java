@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.SCM.model.DistributorSalesReturnItems;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class DistributorSalesReturnDto {
 
 private long id;

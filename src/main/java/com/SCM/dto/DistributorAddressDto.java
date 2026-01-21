@@ -3,8 +3,10 @@ package com.SCM.dto;
 import org.springframework.stereotype.Component;
 
 import com.SCM.model.Distributor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Component
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DistributorAddressDto {
 
 	private long id;

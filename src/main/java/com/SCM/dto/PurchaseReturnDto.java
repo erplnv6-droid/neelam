@@ -22,10 +22,12 @@ import com.SCM.model.Supplier;
 import com.SCM.model.SupplierSubContacts;
 import com.SCM.model.VoucherMaster;
 import com.SCM.model.Warehouse;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PurchaseReturnDto {
 
 	private int id;
