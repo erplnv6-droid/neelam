@@ -1,0 +1,8 @@
+https://gitlab.com/backend3034505/Neelam.git filter=lfs diff=lfs merge=lfs -text
+C:/Users/LNV114/eclipse-workspace/Neelam/Neelam/Neelam filter=lfs diff=lfs merge=lfs -text
+scm114.war filter=lfs diff=lfs merge=lfs -text
+*.jar filter=lfs diff=lfs merge=lfs -text
+*.project filter=lfs diff=lfs merge=lfs -text
+*.Neelam.git filter=lfs diff=lfs merge=lfs -text
+Neelam.git filter=lfs diff=lfs merge=lfs -text
+*.git filter=lfs diff=lfs merge=lfs -text

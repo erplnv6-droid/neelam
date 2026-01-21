@@ -1,0 +1,36 @@
+//package com.SCM.config;
+//
+//import java.io.IOException;
+//
+//import org.springframework.boot.autoconfigure.SpringBootApplication;
+//import org.springframework.context.annotation.Bean;
+//import org.springframework.core.io.ClassPathResource;
+//
+//import com.google.auth.oauth2.GoogleCredentials;
+//import com.google.firebase.FirebaseApp;
+//import com.google.firebase.FirebaseOptions;
+//import com.google.firebase.messaging.FirebaseMessaging;
+//
+//
+//public class NotificationConfig {
+//
+//@Bean
+//FirebaseMessaging firebaseMessaging() throws IOException
+//{
+//	GoogleCredentials googleCredentials=GoogleCredentials.fromStream(new ClassPathResource(
+//			
+//			"fir-demo-724e4-firebase-adminsdk-yhbs7-95ddd1a230.json"
+//			).getInputStream());
+//	
+//	
+//	FirebaseOptions firebaseOptions=FirebaseOptions.builder().setCredentials(googleCredentials).build();
+//	
+//	FirebaseApp firebaseApp=FirebaseApp.initializeApp(firebaseOptions,"push notification");
+//	
+//	return FirebaseMessaging.getInstance(firebaseApp);
+//	
+//	
+//}
+//
+//
+//}

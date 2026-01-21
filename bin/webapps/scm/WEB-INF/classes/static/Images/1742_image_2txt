@@ -1,0 +1,52 @@
+Branch -> branch is master table.
+
+Brand -> brand is master table.
+
+Product  -> Product is master table -  BrandId is saved (product can have multiple brand id) - 
+                                                        (When we create a product, its opening stock will be automatically created).
+                                                        (In the product multiple images can be saved)
+
+ProductImage -> Product Image Contain ProductId .
+
+Warehouse -> Warehouse contain BranchId.
+
+OpeningStock -> Openingstock contain WarehouseId and ProductId.
+
+Distributor -> The zone and state of the distributor should have corresponding RSM, NSM,ASM and ASE created.
+               (one distributor contain multiple deliveryaddress(DistributorAddress)).
+CustomerSubContacts -> customer can have muliple sub contacts.
+
+Retailer -> contain DistributorId
+            (one retailer contain multiple deliveryaddress(RetailerAddress)).
+            (When we create a retailer, its status remains unauthorized, and then after manually updating it, the status changes).
+            (after the status changes, retailer can log in).
+RetailerTempeorary -> (we convert retailer temporary to retailer status change).
+                  
+PurchaseOrder -> convert to SupplierDeliveryNote -> SupplierDeliveryNote -> convert to MaterialReceiptNote ->.
+
+MaterialRecepitNote -> convert to Purchase -> PrimaryOrder -> convert to SalesOrder DeliveryChallan -> Convert to Sales. 
+
+(DC are created in three ways: manually by adding products, by converting from another DC, and by sending pending items from a Sales Order through the DC.)
+
+PurchaseReturn -> We create it manually without conversion.
+
+SalesReturn -> We create it manually without conversion.
+
+Staff -> In the staff there will be 1 NSM for each zone, and there will be 4 RSM allocated zone-wise. Each RSM will have multiple ASMs and ASEs
+
+WorkOrder -> contain retailer id. (When a WorkOrder (SecondaryOrder) is converted to a PrimaryWorkOrder (PO) its status will be changed automatically)
+
+Zone -> There are 4 Zones.
+
+State_Zone -> There are 36 States.
+
+
+Visit ->  visit contain schedule id it has visit in and visit out.
+          (Initially a person will schedule a meeting, and then they will visit. The time of the visit will be saved).
+          (When they visit the status will change to ongoing. after completing the visit, the time and visit status will be updated).
+Schedule -> 
+
+SupplierSubContacts -> customer can have muliple sub contacts.
+
+
+

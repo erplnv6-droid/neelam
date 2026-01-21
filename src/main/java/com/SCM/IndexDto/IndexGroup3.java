@@ -1,0 +1,16 @@
+package com.SCM.IndexDto;
+
+
+
+public interface IndexGroup3 {
+	
+	Long getId();
+	String getTitle();
+	String getCreateddate();
+	String getCreatedtime();
+	String getUpdateddate();
+	String getUpdatedtime();
+	String getCreatebyname();
+	String getUpdatedbyname();
+	
+}

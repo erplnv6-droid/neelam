@@ -1,0 +1,37 @@
+id,name,state_code,country_id
+1,Andhra Pradesh,28,101
+2,Arunachal Pradesh,12,101
+3,Assam,18,101
+4,Bihar,10,101
+5,Chhattisgarh,4,101
+6,Goa,30,101
+7,Gujarat,24,101
+8,Haryana,6,101
+9,Himachal Pradesh,2,101
+10,Jharkhand,20,101
+11,Karnataka,29,101
+12,Kerala,32,101
+13,Madhya Pradesh,23,101
+14,Maharashtra,27,101
+15,Manipur,14,101
+16,Meghalaya,17,101
+17,Mizoram,15,101
+18,Nagaland,13,101
+19,Odisha,21,101
+20,Punjab,3,101
+21,Rajasthan,8,101
+22,Sikkim,11,101
+23,Tamil Nadu,33,101
+24,Telangana,36,101
+25,Tripura,16,101
+26,Uttar Pradesh,9,101
+27,Uttarakhand,5,101
+28,West Bengal,19,101
+29,Andaman and Nicobar Islands,35,101
+30,Chandigarh,4,101
+31,Dadra and Nagar Haveli and Daman and Diu,26,101
+32,Delhi,7,101
+33,Jammu and Kashmir,1,101
+34,Ladakh,38,101
+35,Lakshadweep,31,101
+36,Puducherry,34,101

@@ -1,0 +1,20 @@
+fetch salesOrder by distid--->
+CREATE DEFINER=`root`@`localhost` PROCEDURE `fetchsalesorderbydistid`(in distid int,
+in startDate date,in endDate date)
+BEGIN
+select sales_order.* from sales_order where sales_order.distributor_id=distid 
+and sales_order.status="pending"
+and sales_order.sodate between startDate and endDate
+;
+
+END
+
+-------------------------------------------------------------------------------
+fetch salesOrder by retid--->
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `fetchsalesorderbyretid`(in retid int)
+BEGIN
+select sales_order.* from sales_order inner join retailer 
+on sales_order.distributor_id=retailer.distributor_id
+where sales_order.status="pending" and retailer.id=retid;
+END
