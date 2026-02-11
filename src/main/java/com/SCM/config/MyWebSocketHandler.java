@@ -1,5 +1,6 @@
 package com.SCM.config;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -14,6 +15,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.SCM.dto.StaffLiveLocationDto;
 import com.SCM.dto.StaffLocationDto;
+import com.SCM.model.Staff;
 import com.SCM.model.StaffLocation;
 import com.SCM.repository.StaffLocationRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,50 +44,107 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
         System.out.println("✅ Native WS connected: " + session.getId());
         System.out.println("📡 Active sessions: " + sessions.size());
     }
-
+    
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+
         try {
-            // 🔹 Parse incoming JSON into DTO
             StaffLiveLocationDto dto = mapper.readValue(message.getPayload(), StaffLiveLocationDto.class);
-            System.out.println("📩 Native WS received: " + dto);
+          System.out.println("📩 Native WS received: " + dto);
 
-            // 🔹 Update DB
-            staffLocationRepo.updateStaffLocationWebSocket(dto.getLattitude(), dto.getLongitude(), dto.getStaffid());
+            System.out.println("📩 Staff id : " + dto.getStaffid());
 
-            // 🔹 Fetch updated staff location
-            StaffLocation staffLocation = staffLocationRepo.findByStaffId(dto.getStaffid()).orElse(null);
+            // 🔹 Find existing location
+            StaffLocation staffLocation = staffLocationRepo
+                    .findByStaffId(dto.getStaffid())
+                    .orElse(new StaffLocation()); // if not found → create new object
 
-            if (staffLocation != null) {
-                // 🔹 Prepare safe DTO for frontend
-                StaffLocationDto response = new StaffLocationDto();
-                response.setStaffId(staffLocation.getStaff().getId());
-                response.setLatitude(staffLocation.getLatitude());
-                response.setLongitude(staffLocation.getLongitude());
-                response.setLastUpdated(
-                        staffLocation.getLastUpdated() != null ? staffLocation.getLastUpdated().toString() : null
-                );
+            // 🔹 Set Staff (important)
+            Staff staff = new Staff();
+            staff.setId(dto.getStaffid());
+            staffLocation.setStaff(staff);
 
-                String jsonResponse = mapper.writeValueAsString(response);
+            // 🔹 Update fields (for both insert + update)
+            staffLocation.setLatitude(dto.getLattitude());
+            staffLocation.setLongitude(dto.getLongitude());
+            staffLocation.setLastUpdated(LocalDateTime.now());
 
-                // 🔹 Broadcast to all active sessions
-                synchronized (sessions) {
-                    Iterator<WebSocketSession> it = sessions.iterator();
-                    while (it.hasNext()) {
-                        WebSocketSession s = it.next();
-                        if (!s.isOpen()) {
-                            it.remove(); // remove closed sessions
-                            continue;
-                        }
-                        s.sendMessage(new TextMessage(jsonResponse));
+            // 🔹 Save → JPA will UPDATE if exists, INSERT if not
+            staffLocationRepo.save(staffLocation);
+
+            // 🔹 Send updated data to frontend
+            StaffLocationDto response = new StaffLocationDto();
+            response.setStaffId(dto.getStaffid());
+            response.setLatitude(staffLocation.getLatitude());
+            response.setLongitude(staffLocation.getLongitude());
+            response.setLastUpdated(staffLocation.getLastUpdated().toString());
+
+            String jsonResponse = mapper.writeValueAsString(response);
+
+            synchronized (sessions) {
+                Iterator<WebSocketSession> it = sessions.iterator();
+                while (it.hasNext()) {
+                    WebSocketSession s = it.next();
+                    if (!s.isOpen()) {
+                        it.remove();
+                        continue;
                     }
+                    s.sendMessage(new TextMessage(jsonResponse));
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
             session.sendMessage(new TextMessage("❌ Error: " + e.getMessage()));
         }
     }
+
+
+    
+//    @Override
+//    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+//        try {
+//            // 🔹 Parse incoming JSON into DTO
+//            StaffLiveLocationDto dto = mapper.readValue(message.getPayload(), StaffLiveLocationDto.class);
+//            System.out.println("📩 Native WS received: " + dto);
+//            System.out.println("📩 Staff id : " + dto.getStaffid());
+//            
+//            // 🔹 Update DB
+//            staffLocationRepo.updateStaffLocationWebSocket(dto.getLattitude(), dto.getLongitude(), dto.getStaffid());
+//
+//            // 🔹 Fetch updated staff location
+//            StaffLocation staffLocation = staffLocationRepo.findByStaffId(dto.getStaffid()).orElse(null);
+//
+//            if (staffLocation != null) {
+//                // 🔹 Prepare safe DTO for frontend
+//                StaffLocationDto response = new StaffLocationDto();
+//                response.setStaffId(staffLocation.getStaff().getId());
+//                response.setLatitude(staffLocation.getLatitude());
+//                response.setLongitude(staffLocation.getLongitude());
+//                response.setLastUpdated(
+//                        staffLocation.getLastUpdated() != null ? staffLocation.getLastUpdated().toString() : null
+//                );
+//
+//                String jsonResponse = mapper.writeValueAsString(response);
+//
+//                // 🔹 Broadcast to all active sessions
+//                synchronized (sessions) {
+//                    Iterator<WebSocketSession> it = sessions.iterator();
+//                    while (it.hasNext()) {
+//                        WebSocketSession s = it.next();
+//                        if (!s.isOpen()) {
+//                            it.remove(); // remove closed sessions
+//                            continue;
+//                        }
+//                        s.sendMessage(new TextMessage(jsonResponse));
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            session.sendMessage(new TextMessage("❌ Error: " + e.getMessage()));
+//        }
+//    }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {

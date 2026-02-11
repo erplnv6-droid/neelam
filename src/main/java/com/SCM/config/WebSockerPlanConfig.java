@@ -20,9 +20,4 @@ public class WebSockerPlanConfig implements WebSocketConfigurer {
 	                .setAllowedOriginPatterns("*");
 	    }
 	
-//	   @Override
-//	    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-//	        registry.addHandler(new MyWebSocketHandler(), "/wsnative")
-//	                .setAllowedOriginPatterns("*");
-//	    }
 }

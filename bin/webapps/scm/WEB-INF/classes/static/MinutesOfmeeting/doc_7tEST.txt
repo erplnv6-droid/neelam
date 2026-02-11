@@ -1,0 +1,41 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `outwarddistributorstock`(in did int,in fromdate varchar(100),in todate varchar(100))
+BEGIN
+SELECT p.id,
+p.product_name AS product_name,
+COALESCE(SUM(dci.pcsqty), 0) AS dcquantity,
+COALESCE(SUM(odsi.kgqty), 0) AS outwarddistributorstockqty,
+COALESCE(SUM(dos.quantity),0) + COALESCE(SUM(dci.qty),0) AS inwardqty,
+COALESCE(SUM(odsi.qty),0) AS outwardqty,
+COALESCE(SUM(dci.rate),0) AS dcrate,
+COALESCE(SUM(closingdos.closingqty),0) + COALESCE(SUM(closingdci.closingdcqty),0) - COALESCE(SUM(closingodsi.closingodsiqty),0) as previousclosing,
+(COALESCE(SUM(closingdos.closingqty),0) + COALESCE(SUM(closingdci.closingdcqty),0) - COALESCE(SUM(closingodsi.closingodsiqty),0) - COALESCE(SUM(odsi.qty),0) + COALESCE(SUM(dci.qty),0) + COALESCE(SUM(dos.quantity),0)) as closingstock,
+((COALESCE(SUM(closingdos.closingqty),0) + COALESCE(SUM(closingdci.closingdcqty),0) - COALESCE(SUM(closingodsi.closingodsiqty),0) - COALESCE(SUM(odsi.qty),0) + COALESCE(SUM(dci.qty), 0) + COALESCE(SUM(dos.quantity),0)) * COALESCE(SUM(p.mrp),0)) as amount
+FROM
+product p
+LEFT JOIN distributor_opening_stock dos ON p.id = dos.product_id
+
+LEFT JOIN (SELECT dci.rate,dci.product_id,SUM(dci.dcquantity) AS pcsqty, SUM(dci.dcquantity_placed_kg) as kgqty FROM delivery_charge_items dci 
+JOIN delivery_charge dc ON dci.dc_id = dc.id 
+WHERE dc.distributor_id = did and dc.dcdate between  fromdate and todate  GROUP BY dci.product_id,dci.rate) dci ON dci.product_id = p.id
+
+LEFT JOIN (SELECT odsi.productid, SUM(odsi.outwardqty) AS pcsqty FROM outward_distributor_stock_items odsi 
+JOIN outward_distributor_stock ods ON odsi.outwarddisid = ods.id 
+WHERE ods.distributoroid = did and ods.outdisdate between fromdate and todate GROUP BY odsi.productid) odsi ON odsi.productid = p.id
+
+LEFT JOIN (select SUM(closingdci.dcquantity) AS closingpcsqty,SUM(closingdci.dcquantity_placed_kg) as closingkg, closingdci.product_id from delivery_charge_items closingdci
+join delivery_charge closingdc on closingdci.dc_id = closingdc.id
+WHERE closingdc.distributor_id = did and closingdc.dcdate < fromdate  GROUP BY closingdci.product_id) closingdci ON closingdci.product_id = p.id
+
+LEFT join (select sum(closingdos.quantity) as closingqty, closingdos.product_id from distributor_opening_stock closingdos 
+join product p on closingdos.product_id = p.id
+where closingdos.date < fromdate group by closingdos.product_id) closingdos on closingdos.product_id = p.id 
+
+LEFT JOIN (SELECT closingodsi.productid, SUM(closingodsi.outwardqty) AS closingopcsqty FROM outward_distributor_stock_items closingodsi 
+JOIN outward_distributor_stock closingods ON closingodsi.outwarddisid = closingods.id
+WHERE closingods.distributoroid = did and closingods.outdisdate < fromdate GROUP BY closingodsi.productid) closingodsi ON closingodsi.productid = p.id
+
+WHERE dos.distributor_id = did
+
+GROUP BY 
+p.id, p.product_name,dos.date;
+END

@@ -149,8 +149,17 @@ public class LocationController {
 		return new ResponseEntity<>(locationService.fetchlocationbystaffanddate1(staffid, currentdate),HttpStatus.OK);
 	}
 	
-	
 	@GetMapping("/locationstaff/staff/{staffId}")
+  public ResponseEntity<Location> getLocation1(
+          @PathVariable int staffId,
+          @RequestParam("date") String date) { // "dd-MM-yyyy HH:mm:ss"
+System.out.println("helllloooooooooo");
+      Optional<Location> locationOpt = locationService.getLocationByStaffAndDate(staffId, date);
+      return locationOpt.map(ResponseEntity::ok)
+                        .orElse(ResponseEntity.notFound().build());
+  }
+	
+	@GetMapping("/stafflocation/staff/{staffId}")
     public ResponseEntity<Location> getLocation(
             @PathVariable int staffId,
             @RequestParam("date") String date) { // "dd-MM-yyyy HH:mm:ss"

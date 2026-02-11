@@ -206,7 +206,7 @@ List<Product> findByBrand(@Param("id") int id);
 	@Query(value = "SELECT p.id,p.product_name,p.mrp,p.short_name,p.hsn_code,p.ean_code, p.category,pi.location,p.product_type,p.standard_qty_per_box,p.uom_primary,p.uom_secondary,p.dlp,p.capacity,p.diameter,p.brand,p.igst,p.cgst,p.sgst\r\n"
 			+ "			FROM product p\r\n" 
 			+ "			left join product_image pi on p.id = pi.product_id\r\n"
-			+ "			WHERE p.category=? and p.product_type=? ", nativeQuery = true)
+			+ "			WHERE p.category=? and p.product_type=? and p.product_kind='finished'", nativeQuery = true)
 	public List<ProductProjectionByProductType> getProductByProductTypeVise(@Param("category") String category,
 			@Param("product_type") String product_type, Pageable p);
 
@@ -238,13 +238,13 @@ List<Product> findByBrand(@Param("id") int id);
 	@Query(value = "SELECT p.id,p.product_name,p.mrp,p.short_name,p.hsn_code, p.ean_code, p.category as category,pi.location,p.product_type,\r\n"
 			+ "		    p.standard_qty_per_box,p.uom_primary,p.uom_secondary,p.dlp,p.capacity,p.diameter,p.brand,p.igst,p.cgst,p.sgst\r\n"
 			+ "				FROM product p\r\n" + "				left join product_image pi on p.id = pi.product_id\r\n"
-			+ "				WHERE (REPLACE(p.product_name,' ', '') LIKE CONCAT('%',:search,'%') or p.product_name LIKE CONCAT('%',:search,'%'))\r\n"
+			+ "				WHERE ((REPLACE(p.product_name,' ', '') LIKE CONCAT('%',:search,'%') or p.product_name LIKE CONCAT('%',:search,'%'))\r\n"
 			+ "			 \r\n" + "		\r\n"
 			+ "			or ((replace(p.short_name,' ','') LIKE CONCAT('%',:search,'%') or p.short_name LIKE CONCAT('%',:search,'%'))\r\n"
 			+ "			or ((replace(p.ean_code,' ','') LIKE CONCAT('%', :search,'%') or p.ean_code LIKE CONCAT('%',:search,'%'))\r\n"
-			+ "		))", nativeQuery = true)
+			+ "		))) and (p.product_kind='finished')", nativeQuery = true)
 	public List<ProductProjectionByProductType> getProductByProductNameViseSearch(String search, Pageable p);
-
+	
 	
 	@Query(value = "SELECT p.id,p.product_name,p.mrp,p.short_name,p.hsn_code, p.ean_code, p.category as category,p.product_type,"
 			+ "	 p.standard_qty_per_box,p.uom_primary,p.uom_secondary,p.dlp,p.capacity,p.diameter,p.brand,p.igst,p.cgst,p.sgst"

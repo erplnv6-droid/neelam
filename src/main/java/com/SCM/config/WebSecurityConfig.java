@@ -117,6 +117,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/ws/**", "/ws/**/**", "/topic/**", "/queue/**").permitAll()
                 .antMatchers("/ws/**", "/topic/**", "/queue/**").permitAll()
                 .antMatchers("/api/warehouseupload/page/**").permitAll()
+                .antMatchers("/api/images/**").permitAll() // Added by ::VIVEKG
                 .antMatchers("/scm/api/**").authenticated()
                 .anyRequest().authenticated()
                 .and()
@@ -311,8 +312,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       configuration.addAllowedOrigin("http://192.168.1.78:3001");
       configuration.addAllowedOrigin("http://192.168.1.46:3001");
       configuration.addAllowedOrigin("http://192.168.1.46:3000");
-    
-
+      
+      
       configuration.addAllowedOrigin("http://192.168.1.213:3000");
       configuration.addAllowedOrigin("http://192.168.1.231:3000");
       configuration.addAllowedOrigin("http://192.168.1.213:3001");
@@ -332,6 +333,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       configuration.addAllowedOrigin("http://192.168.1.9:3000");
       configuration.addAllowedOrigin("http://192.168.1.9:3001");
       
+      configuration.addAllowedOrigin("http://192.168.1.72:3000");
+      configuration.addAllowedOrigin("http://192.168.1.72:3001");
       
       configuration.setAllowedMethods(Arrays.asList("*"));
       configuration.addAllowedMethod("*");

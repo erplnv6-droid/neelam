@@ -29,4 +29,11 @@ public interface StaffLocationRepo extends JpaRepository<StaffLocation, Long>{
 	
 	Optional<StaffLocation> findByStaffId(Long staffId);
 
+//	get data by staff id and date
+	
+	
+	
+	
+	
 }
+

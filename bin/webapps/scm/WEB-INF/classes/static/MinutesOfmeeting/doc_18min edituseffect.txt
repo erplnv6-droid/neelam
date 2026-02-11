@@ -1,0 +1,23 @@
+useEffect(() => {
+
+        axios.get(`${BASE_URL}staff/page/0/200/asc/id/${disword.length?disword:encodeURIComponent(' ')}`, { headers: authHeader() })
+            .then(response => {
+                console.log(response)
+              
+                if (response.data.data == undefined) {
+                    setdistributordata1(response.data.Index.map(use => ({ value: use.id, label: use.staff_Name })));
+                    setData(response.data.Index)
+                } if (response.data.Index == undefined) {
+                    setData(response.data.data)
+
+                    setdistributordata1(response.data.data.map(use => ({ value: use.id, label: use.staff_Name })));
+
+                }
+
+                // console.log(response.data.data.map(use => ({ value: use.id, label: use.product_Name })))
+            })
+
+
+
+
+    }, [ disword])
